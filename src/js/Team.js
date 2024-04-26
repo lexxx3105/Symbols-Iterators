@@ -1,9 +1,22 @@
 export default class Team {
-    constructor() {
+  constructor() {
       this.members = new Set();
-    }
-  
-    [Symbol.iterator]() {
-      return this.members[Symbol.iterator]();
-    }
   }
+
+  [Symbol.iterator]() {
+      let iterator = {
+          current: 0,
+          members: [...this.members],
+
+          next() {
+              if (this.current < this.members.length) {
+                  return { done: false, value: this.members[this.current++] };
+              } else {
+                  return { done: true };
+              }
+          }
+      };
+
+      return iterator;
+  }
+}
